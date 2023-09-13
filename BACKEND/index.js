@@ -133,14 +133,69 @@ app.get("/categoriaGourmet", async (req, res) => {
 
 
 //21 Encontrar todos los ingredientes cuyo precio sea entre $2 y $5
+app.get("/ingredientesEntre2y5", async (req,res)=>{
+    try {
+        const response = await cliente.db("BurguerDB").collection("Ingredientes").find({precio:{$gte:2,$lte:5}}).toArray()
+        console.log(response);
+        res.json(response)
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 //23 Encontrar todas las hamburguesas que contienen “Tomate” o “Lechuga” como ingredientes
+app.get("/burguerTomateOLechuga",async (req,res)=>{
+    try {
+        const response = await cliente.db("BurguerDB").collection("Hamburguesas").find({$or:[{ingredientes:"Tomate"},{ingredientes:"Lechuga"}]}).toArray()
+        console.log(response);
+        res.json(response)
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 
 //27 Encontrar la hamburguesa más cara
+app.get("/burguermasCara", async (req,res)=>{
+    try {
+        const response = await cliente.db("BurguerDB").collection("Hamburguesas").find().sort({precio:-1}).limit(1).toArray()
+        console.log(response);
+        res.json(response)
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 //30 Encontrar todas las hamburguesas que contienen exactamente 7 ingredientes
+app.get("/burguer7ingredientes", async (req,res)=>{
+    try {
+        const response = await cliente.db("BurguerDB").collection("Hamburguesas").find().toArray()
+
+        let x =[]
+
+        response.forEach(element => {
+            if(element.ingredientes.length == 7){
+                x.push(element);
+            };
+        })
+
+        console.log(x);
+        res.json(x)
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 
 //31 Encontrar la hamburguesa más cara que fue preparada por un chef especializado en “Gourmet”
+app.get("/gourmetCara",async(req,res)=>{
+    try {
+        const response = await cliente.db("BurguerDB").collection("Hamburguesas").find({categoria:{$eq:"Gourmet"}}).sort({precio:-1}).limit(1).toArray()
+        res.json(response)
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 //34 Encuentra la categoría con la mayor cantidad de hamburguesas
 
