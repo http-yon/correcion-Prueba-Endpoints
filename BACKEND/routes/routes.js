@@ -7,6 +7,7 @@ const uri = process.env.DDBB121
 const router = express.Router()
 const dbName = "BurguerDB"
 
+
 //endpoints
 
 //1 Encontrar todos los ingredientes con stock menor a 400
@@ -172,6 +173,7 @@ router.get("/ejercicio21", async (req, res) => {
     }
 })
 
+
 //23 Encontrar todas las hamburguesas que contienen “Tomate” o “Lechuga” como ingredientes
 router.get("/ejercicio23", async (req, res) => {
     try {
@@ -200,6 +202,7 @@ router.get("/ejercicio27", async (req, res) => {
         console.log(error);
     }
 })
+
 
 //30 Encontrar todas las hamburguesas que contienen exactamente 7 ingredientes
 router.get("/ejercicio30", async (req, res) => {
@@ -239,12 +242,27 @@ router.get("/ejercicio31", async (req, res) => {
 })
 
 //34 Encuentra la categoría con la mayor cantidad de hamburguesas
-router.get("/ejercicio34", async (req,res)=>{
+router.get("/ejercicio34", async (req, res) => {
     try {
         const cliente = new MongoClient(uri)
         cliente.connect()
-        const response  = await cliente.db(dbName).collection("Hamburguesas").find().toArray()
-        
+
+        const pipeline = [
+            {
+                $group: {
+                    _id: "$categoria",
+                    total: { $sum: 1 }
+                }
+            },
+            {
+                $sort: { total: -1 }
+            },
+            {
+                $limit: 1
+            }
+        ];
+
+        const response = await cliente.db(dbName).collection("Hamburguesas").aggregate(pipeline).toArray()
         res.json(response)
         cliente.close()
     } catch (error) {
@@ -254,9 +272,74 @@ router.get("/ejercicio34", async (req,res)=>{
 
 
 //36 Encontrar todos los ingredientes que no están en ninguna hamburguesa
+router.get("/ejercicio36", async (req, res) => {
+    try {
+        const cliente = new MongoClient(uri)
+        cliente.connect()
+
+        const response1 = await cliente.db(dbName).collection("Hamburguesas").distinct("ingredientes")
+        const response2 = await cliente.db(dbName).collection("Ingredientes").distinct("nombre")
+
+        const x = response2.filter(fil => !fil.includes(response1))
+        res.json(x)
+        cliente.close()
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 
 //38 Encuentra el chef que ha preparado hamburguesas con el mayor número de ingredientes en total
+router.get("/ejercicio38", async (req, res) => {
+    try {
+        const cliente = new MongoClient(uri)
+        cliente.connect()
+
+        const data = [
+            {
+                $group: {
+                    _id: "$ingredientes"
+                }
+            }
+        ]
+
+        const response = await cliente.db(dbName).collection("Hamburguesas").aggregate(data).toArray()
+        res.json(response)
+
+        cliente.close()
+    } catch (error) {
+        console.log(error);
+    }
+})
+
 
 //39 Encontrar el precio promedio de las hamburguesas en cada categoría
+router.get("/ejercicio39", async (req, res) => {
+    try {
+        const cliente = new MongoClient(uri);
+        await cliente.connect();
+
+        const data = [
+            {
+                $group: {
+                    _id: "$categoria", 
+                    precioPromedio: { $avg: "$precio" }
+                }
+            }
+        ];
+
+        const resultado = await cliente.db(dbName).collection("Hamburguesas").aggregate(data).toArray();
+
+        res.json(resultado);
+        cliente.close();
+    }
+    catch (error) {
+        console.log(error);
+    }
+})
+
+
+
+
 
 export default router
