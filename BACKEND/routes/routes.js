@@ -320,7 +320,7 @@ router.get("/ejercicio18", async (req, res) => {
     const response = await cliente
       .db(dbName)
       .collection("Hamburguesas")
-      .deleteMany({$expr: { $lt: [{ $size: "$ingredientes" }, 5]}});
+      .deleteMany({ $expr: { $lt: [{ $size: "$ingredientes" }, 5] } });
 
     res.json(response);
     cliente.close();
@@ -332,47 +332,47 @@ router.get("/ejercicio18", async (req, res) => {
 
 //19. Agregar un nuevo chef a la colección con una especialidad en “Cocina Asiática”
 router.get("/ejercicio19", async (req, res) => {
-    try {
-      const cliente = new MongoClient(uri);
-      cliente.connect();
-      
+  try {
+    const cliente = new MongoClient(uri);
+    cliente.connect();
+
     const data = {
-        "nombre": "ChefD",
-        "especialidad": "Cocina Asiática"
+      "nombre": "ChefD",
+      "especialidad": "Cocina Asiática"
     }
 
-      const response = await cliente
-        .db(dbName)
-        .collection("Chefs")
-        .insertOne(data)
-       
-      console.log(response);
-      res.json(response);
-      cliente.close();
-    } catch (error) {
-      console.log(error);
-    }
-  });
+    const response = await cliente
+      .db(dbName)
+      .collection("Chefs")
+      .insertOne(data)
+
+    console.log(response);
+    res.json(response);
+    cliente.close();
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 
 //20. Listar las hamburguesas en orden ascendente según su precio
 router.get("/ejercicio20", async (req, res) => {
-    try {
-      const cliente = new MongoClient(uri);
-      cliente.connect();
-    
-      const response = await cliente
-        .db(dbName)
-        .collection("Hamburguesas")
-        .find()
-        .sort({ precio: -1 })
-        .toArray();
-      res.json(response);
-      cliente.close();
-    } catch (error) {
-      console.log(error);
-    }
-  });
+  try {
+    const cliente = new MongoClient(uri);
+    cliente.connect();
+
+    const response = await cliente
+      .db(dbName)
+      .collection("Hamburguesas")
+      .find()
+      .sort({ precio: -1 })
+      .toArray();
+    res.json(response);
+    cliente.close();
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 //21 Encontrar todos los ingredientes cuyo precio sea entre $2 y $5
 router.get("/ejercicio21", async (req, res) => {
@@ -394,22 +394,22 @@ router.get("/ejercicio21", async (req, res) => {
 
 //22 Actualizar la descripción del “Pan” a “Pan fresco y crujiente”
 router.get("/ejercicio22", async (req, res) => {
-    try {
-      const cliente = new MongoClient(uri);
-      cliente.connect();
-      const response = await cliente
-            .db(dbName)
-            .collection("Ingredientes")
-            .updateOne(
-                { nombre: "Pan" },
-                { $set: { descripcion: "Pan fresco y crujiente" } }
-            );
-      res.json(response);
-      cliente.close();
-    } catch (error) {
-      console.log(error);
-    }
-  });
+  try {
+    const cliente = new MongoClient(uri);
+    cliente.connect();
+    const response = await cliente
+      .db(dbName)
+      .collection("Ingredientes")
+      .updateOne(
+        { nombre: "Pan" },
+        { $set: { descripcion: "Pan fresco y crujiente" } }
+      );
+    res.json(response);
+    cliente.close();
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 //23 Encontrar todas las hamburguesas que contienen “Tomate” o “Lechuga” como ingredientes
 router.get("/ejercicio23", async (req, res) => {
@@ -429,10 +429,61 @@ router.get("/ejercicio23", async (req, res) => {
   }
 });
 
-////////////////////////////////////////////////////////////////////
 //24. Listar todos los chefs excepto “ChefA”
+router.get("/ejercicio24", async (req, res) => {
+  try {
+    const cliente = new MongoClient(uri);
+    cliente.connect();
+
+    const response = await cliente
+      .db(dbName)
+      .collection("Chefs")
+      .find({ nombre: { $ne: "ChefA" } }).toArray()
+
+    res.json(response);
+    cliente.close();
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
 //25. Incrementar en $2 el precio de todas las hamburguesas de la categoría “Gourmet”
+router.get("/ejercicio25", async (req, res) => {
+  try {
+    const cliente = new MongoClient(uri)
+    cliente.connect()
+
+    const response = await cliente.db(dbName).collection("Hamburguesas").updateMany({ categoria: "Gourmet" }, { $inc: { precio: 2 } })
+    res.json(response)
+
+    cliente.close()
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+
 //26. Listar todos los ingredientes en orden alfabético
+router.get("/ejercicio26", async (req, res) => {
+  try {
+    const cliente = new MongoClient(uri);
+    cliente.connect();
+    const response = await cliente
+      .db(dbName)
+      .collection("Ingredientes")
+      .find()
+      .sort({ nombre: 1 })
+      .toArray();
+    console.log(response);
+    res.json(response);
+    cliente.close();
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+
 
 //27 Encontrar la hamburguesa más cara
 router.get("/ejercicio27", async (req, res) => {
@@ -455,7 +506,35 @@ router.get("/ejercicio27", async (req, res) => {
 });
 
 //28. Agregar “Pepinillos” a todas las hamburguesas de la categoría “Clásica”
+router.get("/ejercicio28", async (req, res) => {
+  try {
+    const cliente = new MongoClient(uri)
+    cliente.connect()
+
+    const response = await cliente.db(dbName).collection("Hamburguesas").updateMany({categoria: "Clásica"},{$addToSet:{ingredientes:"Pepinillos"}})
+    res.json(response) 
+
+    cliente.close()
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+
 //29. Eliminar todos los chefs que tienen una especialidad en “Cocina Vegetariana”
+router.get("/ejercicio29", async (req, res) => {
+  try {
+    const cliente = new MongoClient(uri)
+    cliente.connect()
+
+    const response = await cliente.db(dbName).collection("Chefs").deleteMany({especialidad: "Cocina Vegetariana"})
+    res.json(response) 
+
+    cliente.close()
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 //30 Encontrar todas las hamburguesas que contienen exactamente 7 ingredientes
 router.get("/ejercicio30", async (req, res) => {
@@ -503,7 +582,30 @@ router.get("/ejercicio31", async (req, res) => {
   }
 });
 
+////////////////////////////////////////////////////////////////////
 //32. Listar todos los ingredientes junto con el número de hamburguesas que los contienen
+router.get("/ejercicio36", async (req, res) => {
+  try {
+    const cliente = new MongoClient(uri);
+    cliente.connect();
+
+    const response1 = await cliente
+      .db(dbName)
+      .collection("Hamburguesas")
+      .distinct("ingredientes");
+    const response2 = await cliente
+      .db(dbName)
+      .collection("Ingredientes")
+      .distinct("nombre");
+
+    const x = response2.filter((fil) => !fil.includes(response1));
+    res.json(x);
+    cliente.close();
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 //33. Listar los chefs junto con el número de hamburguesas que han preparado
 
 //34 Encuentra la categoría con la mayor cantidad de hamburguesas
