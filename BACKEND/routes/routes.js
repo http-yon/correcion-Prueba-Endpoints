@@ -511,8 +511,8 @@ router.get("/ejercicio28", async (req, res) => {
     const cliente = new MongoClient(uri)
     cliente.connect()
 
-    const response = await cliente.db(dbName).collection("Hamburguesas").updateMany({categoria: "Clásica"},{$addToSet:{ingredientes:"Pepinillos"}})
-    res.json(response) 
+    const response = await cliente.db(dbName).collection("Hamburguesas").updateMany({ categoria: "Clásica" }, { $addToSet: { ingredientes: "Pepinillos" } })
+    res.json(response)
 
     cliente.close()
   } catch (error) {
@@ -527,8 +527,8 @@ router.get("/ejercicio29", async (req, res) => {
     const cliente = new MongoClient(uri)
     cliente.connect()
 
-    const response = await cliente.db(dbName).collection("Chefs").deleteMany({especialidad: "Cocina Vegetariana"})
-    res.json(response) 
+    const response = await cliente.db(dbName).collection("Chefs").deleteMany({ especialidad: "Cocina Vegetariana" })
+    res.json(response)
 
     cliente.close()
   } catch (error) {
@@ -582,9 +582,8 @@ router.get("/ejercicio31", async (req, res) => {
   }
 });
 
-////////////////////////////////////////////////////////////////////
 //32. Listar todos los ingredientes junto con el número de hamburguesas que los contienen
-router.get("/ejercicio36", async (req, res) => {
+router.get("/ejercicio32", async (req, res) => {
   try {
     const cliente = new MongoClient(uri);
     cliente.connect();
@@ -606,7 +605,56 @@ router.get("/ejercicio36", async (req, res) => {
   }
 });
 
+
 //33. Listar los chefs junto con el número de hamburguesas que han preparado
+router.get("/ejercicio33", async (req, res) => {
+  try {
+    const cliente = new MongoClient(uri);
+    await cliente.connect();
+
+    const pipeline = [
+      {
+        $group: {
+          _id: "$chef",
+          cantidadHamburguesas: { $sum: 1 }
+        }
+      }
+    ];
+
+    const contadorHamburguesasChef = await cliente
+      .db(dbName)
+      .collection("Hamburguesas")
+      .aggregate(pipeline)
+      .toArray();
+
+    const chefs = await cliente
+      .db(dbName)
+      .collection("Chefs")
+      .find()
+      .toArray();
+
+    // Combina los datos de los chefs con las cantidades de hamburguesas
+    const resultado = [];
+    for (const chef of chefs) {
+      const cantidadHamburguesas = contadorHamburguesasChef.find(
+        contador => contador._id === chef.nombre
+      ) || { cantidadHamburguesas: 0 };
+
+      resultado.push({
+        chef: chef.nombre,
+        cantidadHamburguesas: cantidadHamburguesas.cantidadHamburguesas
+      });
+    }
+
+    res.json(resultado);
+
+    await cliente.close();
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
 
 //34 Encuentra la categoría con la mayor cantidad de hamburguesas
 router.get("/ejercicio34", async (req, res) => {
@@ -641,7 +689,12 @@ router.get("/ejercicio34", async (req, res) => {
   }
 });
 
+////////////////////////////////////////////////////////////////////
 //35 Listar todos los chefs y el costo total de ingredientes de todas las hamburguesas que han preparado
+
+
+
+
 
 //36 Encontrar todos los ingredientes que no están en ninguna hamburguesa
 router.get("/ejercicio36", async (req, res) => {
