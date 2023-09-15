@@ -22,7 +22,7 @@ router.get("/ejercicio1", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -40,7 +40,7 @@ router.get("/ejercicio2", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -58,7 +58,7 @@ router.get("/ejercicio3", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -74,7 +74,7 @@ router.get("/ejercicio4", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -92,7 +92,7 @@ router.get("/ejercicio5", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -110,7 +110,7 @@ router.get("/ejercicio6", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -126,7 +126,7 @@ router.get("/ejercicio7", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -146,7 +146,7 @@ router.get("/ejercicio8", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -164,7 +164,7 @@ router.get("/ejercicio9", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -184,7 +184,7 @@ router.get("/ejercicio10", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -204,7 +204,7 @@ router.get("/ejercicio11", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -222,7 +222,7 @@ router.get("/ejercicio12", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -238,7 +238,7 @@ router.get("/ejercicio13", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -256,7 +256,7 @@ router.get("/ejercicio14", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -273,7 +273,7 @@ router.get("/ejercicio15", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -290,7 +290,7 @@ router.get("/ejercicio16", async (req, res) => {
     res.json(response.length);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -308,7 +308,7 @@ router.get("/ejercicio17", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -325,10 +325,9 @@ router.get("/ejercicio18", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
-
 
 //19. Agregar un nuevo chef a la colección con una especialidad en “Cocina Asiática”
 router.get("/ejercicio19", async (req, res) => {
@@ -337,23 +336,22 @@ router.get("/ejercicio19", async (req, res) => {
     cliente.connect();
 
     const data = {
-      "nombre": "ChefD",
-      "especialidad": "Cocina Asiática"
-    }
+      nombre: "ChefD",
+      especialidad: "Cocina Asiática",
+    };
 
     const response = await cliente
       .db(dbName)
       .collection("Chefs")
-      .insertOne(data)
+      .insertOne(data);
 
     console.log(response);
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
-
 
 //20. Listar las hamburguesas en orden ascendente según su precio
 router.get("/ejercicio20", async (req, res) => {
@@ -370,7 +368,7 @@ router.get("/ejercicio20", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -388,7 +386,7 @@ router.get("/ejercicio21", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -407,7 +405,7 @@ router.get("/ejercicio22", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -425,7 +423,7 @@ router.get("/ejercicio23", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -438,31 +436,33 @@ router.get("/ejercicio24", async (req, res) => {
     const response = await cliente
       .db(dbName)
       .collection("Chefs")
-      .find({ nombre: { $ne: "ChefA" } }).toArray()
+      .find({ nombre: { $ne: "ChefA" } })
+      .toArray();
 
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
-
 
 //25. Incrementar en $2 el precio de todas las hamburguesas de la categoría “Gourmet”
 router.get("/ejercicio25", async (req, res) => {
   try {
-    const cliente = new MongoClient(uri)
-    cliente.connect()
+    const cliente = new MongoClient(uri);
+    cliente.connect();
 
-    const response = await cliente.db(dbName).collection("Hamburguesas").updateMany({ categoria: "Gourmet" }, { $inc: { precio: 2 } })
-    res.json(response)
+    const response = await cliente
+      .db(dbName)
+      .collection("Hamburguesas")
+      .updateMany({ categoria: "Gourmet" }, { $inc: { precio: 2 } });
+    res.json(response);
 
-    cliente.close()
+    cliente.close();
   } catch (error) {
-    console.log(error)
+    res.status(404).json(error);
   }
-})
-
+});
 
 //26. Listar todos los ingredientes en orden alfabético
 router.get("/ejercicio26", async (req, res) => {
@@ -479,11 +479,9 @@ router.get("/ejercicio26", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
-
-
 
 //27 Encontrar la hamburguesa más cara
 router.get("/ejercicio27", async (req, res) => {
@@ -501,40 +499,48 @@ router.get("/ejercicio27", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
 //28. Agregar “Pepinillos” a todas las hamburguesas de la categoría “Clásica”
 router.get("/ejercicio28", async (req, res) => {
   try {
-    const cliente = new MongoClient(uri)
-    cliente.connect()
+    const cliente = new MongoClient(uri);
+    cliente.connect();
 
-    const response = await cliente.db(dbName).collection("Hamburguesas").updateMany({ categoria: "Clásica" }, { $addToSet: { ingredientes: "Pepinillos" } })
-    res.json(response)
+    const response = await cliente
+      .db(dbName)
+      .collection("Hamburguesas")
+      .updateMany(
+        { categoria: "Clásica" },
+        { $addToSet: { ingredientes: "Pepinillos" } }
+      );
+    res.json(response);
 
-    cliente.close()
+    cliente.close();
   } catch (error) {
-    console.log(error)
+    res.status(404).json(error);
   }
-})
-
+});
 
 //29. Eliminar todos los chefs que tienen una especialidad en “Cocina Vegetariana”
 router.get("/ejercicio29", async (req, res) => {
   try {
-    const cliente = new MongoClient(uri)
-    cliente.connect()
+    const cliente = new MongoClient(uri);
+    cliente.connect();
 
-    const response = await cliente.db(dbName).collection("Chefs").deleteMany({ especialidad: "Cocina Vegetariana" })
-    res.json(response)
+    const response = await cliente
+      .db(dbName)
+      .collection("Chefs")
+      .deleteMany({ especialidad: "Cocina Vegetariana" });
+    res.json(response);
 
-    cliente.close()
+    cliente.close();
   } catch (error) {
-    console.log(error)
+    res.status(404).json(error);
   }
-})
+});
 
 //30 Encontrar todas las hamburguesas que contienen exactamente 7 ingredientes
 router.get("/ejercicio30", async (req, res) => {
@@ -559,7 +565,7 @@ router.get("/ejercicio30", async (req, res) => {
     res.json(x);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -578,7 +584,7 @@ router.get("/ejercicio31", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -601,10 +607,9 @@ router.get("/ejercicio32", async (req, res) => {
     res.json(x);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
-
 
 //33. Listar los chefs junto con el número de hamburguesas que han preparado
 router.get("/ejercicio33", async (req, res) => {
@@ -616,9 +621,9 @@ router.get("/ejercicio33", async (req, res) => {
       {
         $group: {
           _id: "$chef",
-          cantidadHamburguesas: { $sum: 1 }
-        }
-      }
+          cantidadHamburguesas: { $sum: 1 },
+        },
+      },
     ];
 
     const contadorHamburguesasChef = await cliente
@@ -627,22 +632,17 @@ router.get("/ejercicio33", async (req, res) => {
       .aggregate(pipeline)
       .toArray();
 
-    const chefs = await cliente
-      .db(dbName)
-      .collection("Chefs")
-      .find()
-      .toArray();
+    const chefs = await cliente.db(dbName).collection("Chefs").find().toArray();
 
-    // Combina los datos de los chefs con las cantidades de hamburguesas
     const resultado = [];
     for (const chef of chefs) {
       const cantidadHamburguesas = contadorHamburguesasChef.find(
-        contador => contador._id === chef.nombre
+        (contador) => contador._id === chef.nombre
       ) || { cantidadHamburguesas: 0 };
 
       resultado.push({
         chef: chef.nombre,
-        cantidadHamburguesas: cantidadHamburguesas.cantidadHamburguesas
+        cantidadHamburguesas: cantidadHamburguesas.cantidadHamburguesas,
       });
     }
 
@@ -651,10 +651,9 @@ router.get("/ejercicio33", async (req, res) => {
     await cliente.close();
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Error interno del servidor" });
+    res.status(404).json(error);
   }
 });
-
 
 //34 Encuentra la categoría con la mayor cantidad de hamburguesas
 router.get("/ejercicio34", async (req, res) => {
@@ -685,16 +684,57 @@ router.get("/ejercicio34", async (req, res) => {
     res.json(response);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
-////////////////////////////////////////////////////////////////////
 //35 Listar todos los chefs y el costo total de ingredientes de todas las hamburguesas que han preparado
+router.get("/ejercicio35", async (req, res) => {
+  try {
+    const cliente = new MongoClient(uri);
+    cliente.connect();
 
+    const resultado = await cliente
+      .db(dbName)
+      .collection("Chefs")
+      .aggregate([
+        {
+          $lookup: {
+            from: "Hamburguesas",
+            localField: "nombre",
+            foreignField: "chef",
+            as: "hamburguesas",
+          },
+        },
+        {
+          $unwind: "$hamburguesas",
+        },
+        {
+          $lookup: {
+            from: "Ingredientes",
+            localField: "hamburguesas.ingredientes",
+            foreignField: "nombre",
+            as: "ingredientes",
+          },
+        },
+        {
+          $group: {
+            _id: "$nombre",
+            chef: { $first: "$nombre" },
+            costoTotalIngredientes: {
+              $sum: { $sum: "$ingredientes.precio" },
+            },
+          },
+        },
+      ])
+      .toArray();
 
-
-
+    res.json(resultado);
+    cliente.close();
+  } catch (error) {
+    res.status(404).json(error);
+  }
+});
 
 //36 Encontrar todos los ingredientes que no están en ninguna hamburguesa
 router.get("/ejercicio36", async (req, res) => {
@@ -715,11 +755,44 @@ router.get("/ejercicio36", async (req, res) => {
     res.json(x);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
 //37 Listar todas las hamburguesas con su descripción de categoría
+router.get("/ejercicio37", async (req, res) => {
+  try {
+    const cliente = new MongoClient(uri);
+    cliente.connect();
+
+    const categoriaBurguer = await cliente
+      .db(dbName)
+      .collection("Hamburguesas")
+      .aggregate([
+        {
+          $lookup: {
+            from: "Categorias",
+            localField: "categoria",
+            foreignField: "nombre",
+            as: "categoriaInfo",
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            nombre: 1,
+            "categoriaInfo.descripcion": 1,
+          },
+        },
+      ])
+      .toArray();
+
+    res.json(categoriaBurguer);
+    cliente.close();
+  } catch (error) {
+    res.status(404).json(error);
+  }
+});
 
 //38 Encuentra el chef que ha preparado hamburguesas con el mayor número de ingredientes en total
 router.get("/ejercicio38", async (req, res) => {
@@ -744,7 +817,7 @@ router.get("/ejercicio38", async (req, res) => {
 
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
@@ -772,10 +845,46 @@ router.get("/ejercicio39", async (req, res) => {
     res.json(result);
     cliente.close();
   } catch (error) {
-    console.log(error);
+    res.status(404).json(error);
   }
 });
 
 //40 Listar los chefs y la hamburguesa más cara que han preparado
+router.get("/ejercicio40", async (req, res) => {
+  try {
+    const cliente = new MongoClient(uri);
+    cliente.connect();
+
+    const result = await cliente
+      .db(dbName)
+      .collection("Hamburguesas")
+      .aggregate([
+        {
+          $lookup: {
+            from: "Chefs",
+            localField: "chef",
+            foreignField: "nombre",
+            as: "chefInfo",
+          },
+        },
+        {
+          $sort: { precio: -1 },
+        },
+        {
+          $group: {
+            _id: "$chefInfo.nombre",
+            hamburguesaMasCara: { $first: "$nombre" },
+            precioMasCaro: { $first: "$precio" },
+          },
+        },
+      ])
+      .toArray();
+
+    res.json(result);
+    cliente.close();
+  } catch (error) {
+    res.status(404).json(error);
+  }
+});
 
 export default router;
